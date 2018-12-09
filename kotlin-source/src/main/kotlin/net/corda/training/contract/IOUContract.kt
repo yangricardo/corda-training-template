@@ -39,6 +39,7 @@ class IOUContract : Contract {
         // }
         requireThat {
             "No inputs should be consumed when issuing an IOU." using (tx.inputs.isEmpty())
+            "Only one output state should be created when issuing an IOU." using (tx.outputs.size == 1)
         }
 
     }

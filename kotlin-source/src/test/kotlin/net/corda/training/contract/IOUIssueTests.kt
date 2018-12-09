@@ -110,23 +110,23 @@ class IOUIssueTests {
      * Hint: Write an additional constraint within the existing [requireThat] block which you created in the previous
      * task.
      */
-//    @Test
-//    fun issueTransactionMustHaveOneOutput() {
-//        val iou = IOUState(1.POUNDS, ALICE.party, BOB.party)
-//        ledgerServices.ledger {
-//            transaction {
-//                command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Issue())
-//                output(IOUContract.IOU_CONTRACT_ID, iou) // Two outputs fails.
-//                output(IOUContract.IOU_CONTRACT_ID, iou)
-//                this `fails with` "Only one output state should be created when issuing an IOU."
-//            }
-//            transaction {
-//                command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Issue())
-//                output(IOUContract.IOU_CONTRACT_ID, iou) // One output passes.
-//                this.verifies()
-//            }
-//        }
-//    }
+    @Test
+    fun issueTransactionMustHaveOneOutput() {
+        val iou = IOUState(1.POUNDS, ALICE.party, BOB.party)
+        ledgerServices.ledger {
+            transaction {
+                command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Issue())
+                output(IOUContract.IOU_CONTRACT_ID, iou) // Two outputs fails.
+                output(IOUContract.IOU_CONTRACT_ID, iou)
+                this `fails with` "Only one output state should be created when issuing an IOU."
+            }
+            transaction {
+                command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Issue())
+                output(IOUContract.IOU_CONTRACT_ID, iou) // One output passes.
+                this.verifies()
+            }
+        }
+    }
 
     /**
      * Task 4.
