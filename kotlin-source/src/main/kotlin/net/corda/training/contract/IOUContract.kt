@@ -48,7 +48,10 @@ class IOUContract : Contract {
                 "The lender and borrower cannot have the same identity." using (iou.lender != iou.borrower)
                 "Both lender and borrower together only may sign IOU issue transaction." using (command.signers.toSet() == iou.participants.map { it.owningKey }.toSet())
             }
-            is Commands.Transfer -> requireThat {  }
+            is Commands.Transfer -> requireThat {
+                "An IOU transfer transaction should only consume one input state." using (tx.inputs.size == 1)
+                "An IOU transfer transaction should only create one output state." using (tx.outputs.size == 1)
+            }
             is Commands.Settle -> requireThat {  }
         }
 
