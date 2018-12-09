@@ -85,23 +85,23 @@ class IOUIssueTests {
      * You can access the list of inputs via the [LedgerTransaction] object which is passed into
      * [IOUContract.verify].
      */
-//    @Test
-//    fun issueTransactionMustHaveNoInputs() {
-//        val iou = IOUState(1.POUNDS, ALICE.party, BOB.party)
-//        ledgerServices.ledger {
-//            transaction {
-//                input(IOUContract.IOU_CONTRACT_ID, DummyState())
-//                command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Issue())
-//                output(IOUContract.IOU_CONTRACT_ID, iou)
-//                this `fails with` "No inputs should be consumed when issuing an IOU."
-//            }
-//            transaction {
-//                output(IOUContract.IOU_CONTRACT_ID, iou)
-//                command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Issue())
-//                this.verifies() // As there are no input states.
-//            }
-//        }
-//    }
+    @Test
+    fun issueTransactionMustHaveNoInputs() {
+        val iou = IOUState(1.POUNDS, ALICE.party, BOB.party)
+        ledgerServices.ledger {
+            transaction {
+                input(IOUContract.IOU_CONTRACT_ID, DummyState())
+                command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Issue())
+                output(IOUContract.IOU_CONTRACT_ID, iou)
+                this `fails with` "No inputs should be consumed when issuing an IOU."
+            }
+            transaction {
+                output(IOUContract.IOU_CONTRACT_ID, iou)
+                command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Issue())
+                this.verifies() // As there are no input states.
+            }
+        }
+    }
 
     /**
      * Task 3.
