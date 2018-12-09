@@ -40,6 +40,9 @@ class IOUContract : Contract {
         requireThat {
             "No inputs should be consumed when issuing an IOU." using (tx.inputs.isEmpty())
             "Only one output state should be created when issuing an IOU." using (tx.outputs.size == 1)
+            val iou = tx.outputStates.single() as IOUState
+            "A newly issued IOU must have a positive amount." using(iou.amount.quantity > 0)
+
         }
 
     }
