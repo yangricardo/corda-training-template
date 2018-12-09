@@ -140,36 +140,36 @@ class IOUTransferTests {
      * - It's easier to take this approach then check all properties other than the lender haven't changed, including
      *   the [linearId] and the [contract]!
      */
-//    @Test
-//    fun onlyTheLenderMayChange() {
-//        val iou = IOUState(10.POUNDS, ALICE.party, BOB.party)
-//        ledgerServices.ledger {
-//            transaction {
-//                input(IOUContract::class.java.name, IOUState(10.DOLLARS, ALICE.party, BOB.party))
-//                output(IOUContract::class.java.name, IOUState(1.DOLLARS, ALICE.party, BOB.party))
-//                command(listOf(ALICE.publicKey, BOB.publicKey, CHARLIE.publicKey), IOUContract.Commands.Transfer())
-//                this `fails with` "Only the lender property may change."
-//            }
-//            transaction {
-//                input(IOUContract::class.java.name, IOUState(10.DOLLARS, ALICE.party, BOB.party))
-//                output(IOUContract::class.java.name, IOUState(10.DOLLARS, ALICE.party, CHARLIE.party))
-//                command(listOf(ALICE.publicKey, BOB.publicKey, CHARLIE.publicKey), IOUContract.Commands.Transfer())
-//                this `fails with` "Only the lender property may change."
-//            }
-//            transaction {
-//                input(IOUContract::class.java.name, IOUState(10.DOLLARS, ALICE.party, BOB.party, 5.DOLLARS))
-//                output(IOUContract::class.java.name, IOUState(10.DOLLARS, ALICE.party, BOB.party, 10.DOLLARS))
-//                command(listOf(ALICE.publicKey, BOB.publicKey, CHARLIE.publicKey), IOUContract.Commands.Transfer())
-//                this `fails with` "Only the lender property may change."
-//            }
-//            transaction {
-//                input(IOUContract::class.java.name, iou)
-//                output(IOUContract::class.java.name, iou.withNewLender(CHARLIE.party))
-//                command(listOf(ALICE.publicKey, BOB.publicKey, CHARLIE.publicKey), IOUContract.Commands.Transfer())
-//                this.verifies()
-//            }
-//        }
-//    }
+    @Test
+    fun onlyTheLenderMayChange() {
+        val iou = IOUState(10.POUNDS, ALICE.party, BOB.party)
+        ledgerServices.ledger {
+            transaction {
+                input(IOUContract::class.java.name, IOUState(10.DOLLARS, ALICE.party, BOB.party))
+                output(IOUContract::class.java.name, IOUState(1.DOLLARS, ALICE.party, BOB.party))
+                command(listOf(ALICE.publicKey, BOB.publicKey, CHARLIE.publicKey), IOUContract.Commands.Transfer())
+                this `fails with` "Only the lender property may change."
+            }
+            transaction {
+                input(IOUContract::class.java.name, IOUState(10.DOLLARS, ALICE.party, BOB.party))
+                output(IOUContract::class.java.name, IOUState(10.DOLLARS, ALICE.party, CHARLIE.party))
+                command(listOf(ALICE.publicKey, BOB.publicKey, CHARLIE.publicKey), IOUContract.Commands.Transfer())
+                this `fails with` "Only the lender property may change."
+            }
+            transaction {
+                input(IOUContract::class.java.name, IOUState(10.DOLLARS, ALICE.party, BOB.party, 5.DOLLARS))
+                output(IOUContract::class.java.name, IOUState(10.DOLLARS, ALICE.party, BOB.party, 10.DOLLARS))
+                command(listOf(ALICE.publicKey, BOB.publicKey, CHARLIE.publicKey), IOUContract.Commands.Transfer())
+                this `fails with` "Only the lender property may change."
+            }
+            transaction {
+                input(IOUContract::class.java.name, iou)
+                output(IOUContract::class.java.name, iou.withNewLender(CHARLIE.party))
+                command(listOf(ALICE.publicKey, BOB.publicKey, CHARLIE.publicKey), IOUContract.Commands.Transfer())
+                this.verifies()
+            }
+        }
+    }
 
     /**
      * Task 4.

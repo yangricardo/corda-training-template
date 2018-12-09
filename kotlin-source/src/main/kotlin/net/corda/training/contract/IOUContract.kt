@@ -51,6 +51,9 @@ class IOUContract : Contract {
             is Commands.Transfer -> requireThat {
                 "An IOU transfer transaction should only consume one input state." using (tx.inputs.size == 1)
                 "An IOU transfer transaction should only create one output state." using (tx.outputs.size == 1)
+                val input = tx.inputStates.single() as IOUState
+                val output = tx.outputStates.single() as IOUState
+                "Only the lender property may change." using (input == output.withNewLender(input.lender))
             }
             is Commands.Settle -> requireThat {  }
         }
