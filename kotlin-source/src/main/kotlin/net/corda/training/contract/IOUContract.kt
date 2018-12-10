@@ -73,6 +73,11 @@ class IOUContract : Contract {
                 // Check there are output cash states.
                 val cash = tx.outputsOfType<Cash.State>()
                 requireThat { "There must be output cash." using (cash.isNotEmpty()) }
+
+                // Check that the cash is being assigned to us.
+                val inputIou = ious.inputs.single()
+                val acceptableCash = cash.filter { it.owner == inputIou.lender }
+                requireThat { "There must be output cash paid to the recipient." using (acceptableCash.isNotEmpty()) }
             }
         }
 

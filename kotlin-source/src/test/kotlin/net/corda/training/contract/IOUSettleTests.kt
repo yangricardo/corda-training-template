@@ -173,29 +173,29 @@ class IOUSettleTests {
      * Hint:
      * - Use the [outputsOfType] extension function to filter the transaction's outputs by type, in this case [Cash.State].
      */
-//    @Test
-//    fun mustBeCashOutputStatesPresent() {
-//        val iou = IOUState(10.DOLLARS, ALICE.party, BOB.party)
-//        val cash = createCashState(5.DOLLARS, BOB.party)
-//        val cashPayment = cash.withNewOwner(newOwner = ALICE.party)
-//        ledgerServices.ledger {
-//            transaction {
-//                input(IOUContract.IOU_CONTRACT_ID, iou)
-//                output(IOUContract.IOU_CONTRACT_ID, iou.pay(5.DOLLARS))
-//                command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Settle())
-//                this `fails with` "There must be output cash."
-//            }
-//            transaction {
-//                input(IOUContract.IOU_CONTRACT_ID, iou)
-//                input(IOUContract.IOU_CONTRACT_ID, cash)
-//                output(IOUContract.IOU_CONTRACT_ID, iou.pay(5.DOLLARS))
-//                output(IOUContract.IOU_CONTRACT_ID, cashPayment.ownableState)
-//                command(BOB.publicKey, cashPayment.command)
-//                command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Settle())
-//                this.verifies()
-//            }
-//        }
-//    }
+    @Test
+    fun mustBeCashOutputStatesPresent() {
+        val iou = IOUState(10.DOLLARS, ALICE.party, BOB.party)
+        val cash = createCashState(5.DOLLARS, BOB.party)
+        val cashPayment = cash.withNewOwner(newOwner = ALICE.party)
+        ledgerServices.ledger {
+            transaction {
+                input(IOUContract.IOU_CONTRACT_ID, iou)
+                output(IOUContract.IOU_CONTRACT_ID, iou.pay(5.DOLLARS))
+                command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Settle())
+                this `fails with` "There must be output cash."
+            }
+            transaction {
+                input(IOUContract.IOU_CONTRACT_ID, iou)
+                input(IOUContract.IOU_CONTRACT_ID, cash)
+                output(IOUContract.IOU_CONTRACT_ID, iou.pay(5.DOLLARS))
+                output(IOUContract.IOU_CONTRACT_ID, cashPayment.ownableState)
+                command(BOB.publicKey, cashPayment.command)
+                command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Settle())
+                this.verifies()
+            }
+        }
+    }
 
     /**
      * Task 5.
