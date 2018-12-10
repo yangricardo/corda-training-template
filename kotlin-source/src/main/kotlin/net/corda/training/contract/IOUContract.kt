@@ -66,6 +66,10 @@ class IOUContract : Contract {
 
             }
             is Commands.Settle -> {
+                // Check there is only one group of IOUs and that there is always an input IOU.
+                val ious = tx.groupStates<IOUState, UniqueIdentifier> { it.linearId }.single()
+                requireThat { "There must be one input IOU." using (ious.inputs.size == 1) }
+
 
             }
         }

@@ -98,34 +98,34 @@ class IOUSettleTests {
      *
      *   This is exactly how map / filter are used in Kotlin.
      */
-//    @Test
-//    fun mustBeOneGroupOfIOUs() {
-//        val iouOne = IOUState(10.POUNDS, ALICE.party, BOB.party)
-//        val iouTwo = IOUState(5.POUNDS, ALICE.party, BOB.party)
-//        val inputCash = createCashState(5.POUNDS, BOB.party)
-//        val outputCash = inputCash.withNewOwner(newOwner = ALICE.party)
-//        ledgerServices.ledger {
-//            transaction {
-//                input(IOUContract.IOU_CONTRACT_ID, iouOne)
-//                input(IOUContract.IOU_CONTRACT_ID, iouTwo)
-//                command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Settle())
-//                output(IOUContract.IOU_CONTRACT_ID, iouOne.pay(5.POUNDS))
-//                input(IOUContract.IOU_CONTRACT_ID, inputCash)
-//                output(IOUContract.IOU_CONTRACT_ID, outputCash.ownableState)
-//                command(BOB.publicKey, Cash.Commands.Move())
-//                this `fails with` "List has more than one element."
-//            }
-//            transaction {
-//                input(IOUContract.IOU_CONTRACT_ID, iouOne)
-//                command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Settle())
-//                output(IOUContract.IOU_CONTRACT_ID, iouOne.pay(5.POUNDS))
-//                input(IOUContract.IOU_CONTRACT_ID, inputCash)
-//                output(IOUContract.IOU_CONTRACT_ID, outputCash.ownableState)
-//                command(BOB.publicKey, Cash.Commands.Move())
-//                this.verifies()
-//            }
-//        }
-//    }
+    @Test
+    fun mustBeOneGroupOfIOUs() {
+        val iouOne = IOUState(10.POUNDS, ALICE.party, BOB.party)
+        val iouTwo = IOUState(5.POUNDS, ALICE.party, BOB.party)
+        val inputCash = createCashState(5.POUNDS, BOB.party)
+        val outputCash = inputCash.withNewOwner(newOwner = ALICE.party)
+        ledgerServices.ledger {
+            transaction {
+                input(IOUContract.IOU_CONTRACT_ID, iouOne)
+                input(IOUContract.IOU_CONTRACT_ID, iouTwo)
+                command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Settle())
+                output(IOUContract.IOU_CONTRACT_ID, iouOne.pay(5.POUNDS))
+                input(IOUContract.IOU_CONTRACT_ID, inputCash)
+                output(IOUContract.IOU_CONTRACT_ID, outputCash.ownableState)
+                command(BOB.publicKey, Cash.Commands.Move())
+                this `fails with` "List has more than one element."
+            }
+            transaction {
+                input(IOUContract.IOU_CONTRACT_ID, iouOne)
+                command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Settle())
+                output(IOUContract.IOU_CONTRACT_ID, iouOne.pay(5.POUNDS))
+                input(IOUContract.IOU_CONTRACT_ID, inputCash)
+                output(IOUContract.IOU_CONTRACT_ID, outputCash.ownableState)
+                command(BOB.publicKey, Cash.Commands.Move())
+                this.verifies()
+            }
+        }
+    }
 
     /**
      * Task 3.
