@@ -2,6 +2,8 @@ package net.corda.training.contract
 
 import net.corda.core.contracts.*
 import net.corda.core.transactions.LedgerTransaction
+import net.corda.finance.contracts.asset.Cash
+import net.corda.finance.utils.sumCash
 import net.corda.training.state.IOUState
 
 /**
@@ -63,7 +65,9 @@ class IOUContract : Contract {
                         )
 
             }
-            is Commands.Settle -> requireThat {  }
+            is Commands.Settle -> {
+
+            }
         }
 
 
