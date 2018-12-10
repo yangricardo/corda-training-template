@@ -132,37 +132,37 @@ class IOUSettleTests {
      * There always has to be one input IOU in a settle transaction but there might not be an output IOU.
      * TODO: Add a constraint to check there is always one input IOU.
      */
-//    @Test
-//    fun mustHaveOneInputIOU() {
-//        val iou = IOUState(10.POUNDS, ALICE.party, BOB.party)
-//        val iouOne = IOUState(10.POUNDS, ALICE.party, BOB.party)
-//        val tenPounds = createCashState(10.POUNDS, BOB.party)
-//        val fivePounds = createCashState(5.POUNDS, BOB.party)
-//        ledgerServices.ledger {
-//            transaction {
-//                command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Settle())
-//                output(IOUContract.IOU_CONTRACT_ID, iou)
-//                this `fails with` "There must be one input IOU."
-//            }
-//            transaction {
-//                input(IOUContract.IOU_CONTRACT_ID, iouOne)
-//                command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Settle())
-//                output(IOUContract.IOU_CONTRACT_ID, iouOne.pay(5.POUNDS))
-//                input(IOUContract.IOU_CONTRACT_ID, fivePounds)
-//                output(IOUContract.IOU_CONTRACT_ID, fivePounds.withNewOwner(newOwner = ALICE.party).ownableState)
-//                command(BOB.publicKey, Cash.Commands.Move())
-//                this.verifies()
-//            }
-//            transaction {
-//                input(IOUContract.IOU_CONTRACT_ID, iouOne)
-//                command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Settle())
-//                input(IOUContract.IOU_CONTRACT_ID, tenPounds)
-//                output(IOUContract.IOU_CONTRACT_ID, tenPounds.withNewOwner(newOwner = ALICE.party).ownableState)
-//                command(BOB.publicKey, Cash.Commands.Move())
-//                this.verifies()
-//            }
-//        }
-//    }
+    @Test
+    fun mustHaveOneInputIOU() {
+        val iou = IOUState(10.POUNDS, ALICE.party, BOB.party)
+        val iouOne = IOUState(10.POUNDS, ALICE.party, BOB.party)
+        val tenPounds = createCashState(10.POUNDS, BOB.party)
+        val fivePounds = createCashState(5.POUNDS, BOB.party)
+        ledgerServices.ledger {
+            transaction {
+                command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Settle())
+                output(IOUContract.IOU_CONTRACT_ID, iou)
+                this `fails with` "There must be one input IOU."
+            }
+            transaction {
+                input(IOUContract.IOU_CONTRACT_ID, iouOne)
+                command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Settle())
+                output(IOUContract.IOU_CONTRACT_ID, iouOne.pay(5.POUNDS))
+                input(IOUContract.IOU_CONTRACT_ID, fivePounds)
+                output(IOUContract.IOU_CONTRACT_ID, fivePounds.withNewOwner(newOwner = ALICE.party).ownableState)
+                command(BOB.publicKey, Cash.Commands.Move())
+                this.verifies()
+            }
+            transaction {
+                input(IOUContract.IOU_CONTRACT_ID, iouOne)
+                command(listOf(ALICE.publicKey, BOB.publicKey), IOUContract.Commands.Settle())
+                input(IOUContract.IOU_CONTRACT_ID, tenPounds)
+                output(IOUContract.IOU_CONTRACT_ID, tenPounds.withNewOwner(newOwner = ALICE.party).ownableState)
+                command(BOB.publicKey, Cash.Commands.Move())
+                this.verifies()
+            }
+        }
+    }
 
     /**
      * Task 4.

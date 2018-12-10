@@ -70,7 +70,9 @@ class IOUContract : Contract {
                 val ious = tx.groupStates<IOUState, UniqueIdentifier> { it.linearId }.single()
                 requireThat { "There must be one input IOU." using (ious.inputs.size == 1) }
 
-
+                // Check there are output cash states.
+                val cash = tx.outputsOfType<Cash.State>()
+                requireThat { "There must be output cash." using (cash.isNotEmpty()) }
             }
         }
 
